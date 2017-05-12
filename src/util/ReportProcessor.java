@@ -89,7 +89,7 @@ public class ReportProcessor {
                 int width = 640;
                 int height = 480;
                 ByteArrayOutputStream chart_out = new ByteArrayOutputStream();
-                ChartUtilities.writeChartAsPNG(chart_out,barChart,width,height);
+                ChartUtilities.writeChartAsPNG(chart_out, barChart, width, height);
                 int my_picture_id = workbook.addPicture(chart_out.toByteArray(), Workbook.PICTURE_TYPE_PNG);
                 chart_out.close();
                 XSSFDrawing draw = (XSSFDrawing) sheet.createDrawingPatriarch();
@@ -101,11 +101,11 @@ public class ReportProcessor {
             }
 
             Sheet sheet = workbook.createSheet("Итог");
-            for(int j = 0; j < group.getMonthInfo().size(); j ++) {
+            for (int j = 0; j < group.getMonthInfo().size(); j++) {
                 Row row = sheet.createRow(j);
                 Cell cell = row.createCell(0);
                 cell.setCellValue(group.getMonthInfo().get(j).getMonth());
-                for(int i = 0; i < columnNames.size(); i++) {
+                for (int i = 0; i < columnNames.size(); i++) {
                     cell = row.createCell(i + 1);
                     cell.setCellValue(group.getMonthInfo().get(j).getColumnSummary(i));
                 }
@@ -141,8 +141,8 @@ public class ReportProcessor {
             chart.plot(data, bottomAxis, leftAxis);
 
             JFreeChart barChart = createYearChart(group, columnNames);
-            int width=850;
-            int height=480;
+            int width = 850;
+            int height = 480;
             ByteArrayOutputStream chart_out = new ByteArrayOutputStream();
             ChartUtilities.writeChartAsPNG(chart_out, barChart, width, height);
             int my_picture_id = workbook.addPicture(chart_out.toByteArray(), Workbook.PICTURE_TYPE_PNG);
@@ -162,6 +162,7 @@ public class ReportProcessor {
             e.printStackTrace();
         }
     }
+
     public static void makeReport(int groupIndex, int monthIndex, XMLProcessor base) {
         Workbook workbook = new XSSFWorkbook();
         try {
@@ -218,10 +219,10 @@ public class ReportProcessor {
                 ArrayList<State> list = new ArrayList<State>();
                 list.add(state);
                 JFreeChart barChart = createMonthChart(list);
-                int width=640;
-                int height=480;
+                int width = 640;
+                int height = 480;
                 ByteArrayOutputStream chart_out = new ByteArrayOutputStream();
-                ChartUtilities.writeChartAsPNG(chart_out,barChart,width,height);
+                ChartUtilities.writeChartAsPNG(chart_out, barChart, width, height);
                 int my_picture_id = workbook.addPicture(chart_out.toByteArray(), Workbook.PICTURE_TYPE_PNG);
                 chart_out.close();
                 XSSFDrawing draw = (XSSFDrawing) sheet.createDrawingPatriarch();
@@ -286,8 +287,8 @@ public class ReportProcessor {
             chart.plot(data, bottomAxis, leftAxis);
 
             JFreeChart barChart = createMonthChart((ArrayList<State>) month.getStateList());
-            int width=850;
-            int height=480;
+            int width = 850;
+            int height = 480;
             ByteArrayOutputStream chart_out = new ByteArrayOutputStream();
             ChartUtilities.writeChartAsPNG(chart_out, barChart, width, height);
             int my_picture_id = workbook.addPicture(chart_out.toByteArray(), Workbook.PICTURE_TYPE_PNG);
@@ -340,7 +341,7 @@ public class ReportProcessor {
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
         for (State state : stateList) {
             java.util.List list = state.getDailyData();
-            for(int i = 0; i < list.size(); i++) {
+            for (int i = 0; i < list.size(); i++) {
                 dataSet.setValue((Number) Double.parseDouble(list.get(i).toString()), state.getName(), i + 1);
             }
         }
@@ -355,7 +356,7 @@ public class ReportProcessor {
     public static JFreeChart createYearChart(Group group, List<String> columnNames) {
 
         DefaultCategoryDataset yearData = new DefaultCategoryDataset();
-        for(int i = 0; i < columnNames.size(); i++) {
+        for (int i = 0; i < columnNames.size(); i++) {
             for (int j = 0; j < group.getMonthInfo().size(); j++) {
                 yearData.setValue((Number) (group.getMonthInfo().get(j).getColumnSummary(i)),
                         i, j + 1);

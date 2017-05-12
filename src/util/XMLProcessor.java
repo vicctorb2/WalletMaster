@@ -33,10 +33,10 @@ public class XMLProcessor {
     public static final String DAY = "day";
     public static final String SUMMARY = "summary";
 
-    private List<String>  groupNames = new ArrayList<>();
+    private List<String> groupNames = new ArrayList<>();
     private List<Group> groups = new ArrayList<>();
 
-    public void saveData(){
+    public void saveData() {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -105,23 +105,23 @@ public class XMLProcessor {
 
             NodeList groupNodes = root.getElementsByTagName(GROUP);
 
-            for(int i = 0; i < groupNodes.getLength(); i++) {
+            for (int i = 0; i < groupNodes.getLength(); i++) {
                 Element groupElement = (Element) groupNodes.item(i);
                 Group group = new Group();
                 group.setGroupName(groupElement.getAttribute(NAME));
                 groupNames.add(groupElement.getAttribute(NAME));
                 NodeList monthNodes = groupElement.getElementsByTagName(MONTH);
-                for(int j = 0; j < monthNodes.getLength(); j++) {
+                for (int j = 0; j < monthNodes.getLength(); j++) {
                     Element monthElement = (Element) monthNodes.item(j);
                     Month month = new Month(monthElement.getAttribute(NAME));
                     NodeList stateNodes = monthElement.getElementsByTagName(STATE);
-                    for(int k = 0; k < stateNodes.getLength(); k++) {
+                    for (int k = 0; k < stateNodes.getLength(); k++) {
                         Element stateElement = (Element) stateNodes.item(k);
                         State state = new State();
                         group.addColumn(stateElement.getAttribute(NAME));
                         state.setName(stateElement.getAttribute(NAME));
                         NodeList dayNodes = stateElement.getChildNodes();
-                        for(int t = 0; t < dayNodes.getLength(); t++) {
+                        for (int t = 0; t < dayNodes.getLength(); t++) {
                             if (dayNodes.item(t).getNodeType() == Node.ELEMENT_NODE) {
                                 if (dayNodes.item(t).getNodeName().equals(SUMMARY)) {
                                     state.setSummary(Double.parseDouble(dayNodes.item(t).getTextContent()));
@@ -146,12 +146,12 @@ public class XMLProcessor {
         }
     }
 
-    public void addGroup(Group group){
+    public void addGroup(Group group) {
         groups.add(group);
         groupNames.add(group.getGroupName());
     }
 
-    public void removeGroup(String groupName){
+    public void removeGroup(String groupName) {
         int index = groupNames.indexOf(groupName);
         if (index >= 0) {
             groupNames.remove(index);
